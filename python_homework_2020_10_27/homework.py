@@ -88,15 +88,14 @@ class HashLinearProbingMap:
         else:
             entry = Entry(key, value)
             index = self.hashFn(key)
-            if self.isAvailable(index):
-                self.table[index] = entry
-            else:
-                while True:
+            while True:
+                if self.isAvailable(index):
+                    self.table[index] = entry
+                    break
+                else:
                     # table을 순회하며 빈 자리를 찾음
                     index = (index + 1) % self.mapSize
-                    if self.isAvailable(index):
-                        self.table[index] = entry
-                        break
+
                     
     def search(self, key):
         index = self.hashFn(key)
