@@ -37,12 +37,13 @@ class binarySearchMap:
 
     def insert(self, key, value):
         entry = Entry(key, value)
-
-        # 항목이 하나도 없거나 table에 저장된 Entry의 key값 중에 가장 크면 맨 뒤에 삽입. 
-        # table에 저장된 entry들의 key값의 최대값을 알기 위해 key값만 모아놓은 리스트를 생성.
+        # table이 비어있거나 key의 최대값보다 크다면(맨 뒤)
         if self.size() == 0 or key > max([x.key for x in self.table]):
             self.table.append(entry)
-
+        # key의 최소값보다 작다면(맨 앞)
+        elif key < min([x.key for x in self.table]):
+            self.table.insert(0, entry)
+        # 중간에 삽입해야 한다면
         else:
             for index in range(len(self.table)):
                 beforeKey = self.table[index].key   # 새로 추가할 entry의 앞 entry
