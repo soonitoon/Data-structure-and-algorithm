@@ -41,6 +41,7 @@ class CircularQueue:
         return out
 
 # 이진트리 클래스
+
 class TNode:
     def __init__(self, data, left, right):
         self.data = data
@@ -48,93 +49,63 @@ class TNode:
         self.right = right
 
 # 전위 순회 함수
-    def preorder(self, n):
-        if n is not None:
-            print(n.data, end=' ') # 루트노드 화면 출력
-            self.preorder(n.left) # 순환적으로 서브트리 처리...
-            self.preorder(n.right)
+def preorder(n):
+    if n is not None:
+        print(n.data, end=' ') # 루트노드 화면 출력
+        preorder(n.left) # 순환적으로 서브트리 처리...
+        preorder(n.right)
 
 # 중위 순회 함수
-    def inorder(self, n):
-        if n is not None:
-            self.inorder(n.left)
-            print(n.data, end=' ')
-            self.inorder(n.right)
+def inorder(n):
+    if n is not None:
+        inorder(n.left)
+        print(n.data, end=' ')
+        inorder(n.right)
 
 # 후위 순환 함수
-    def postorder(self, n):
-        if n is not None:
-            self.postorder(n.left)
-            self.postorder(n.right)
-            print(n.data, end=' ')
+def postorder(n):
+    if n is not None:
+        postorder(n.left)
+        postorder(n.right)
+        print(n.data, end=' ')
 
 # 레벨 순회(순환 구조로 만들 수 없음!)
-    def levelorder(self, root):
-        queue = CircularQueue()
-        queue.enqueue(root)
-        while not queue.isEmpty():
-            n = queue.dequeue()
-            if n is not None:
-                print(n.data, end=' ')
-                queue.enqueue(n.left)
-                queue.enqueue(n.right)
+def levelorder(root):
+    queue = CircularQueue()
+    queue.enqueue(root)
+    while not queue.isEmpty():
+        n = queue.dequeue()
+        if n is not None:
+            print(n.data, end=' ')
+            queue.enqueue(n.left)
+            queue.enqueue(n.right)
 
 # 노드 계산 함수
-    def count_node(self, n):
-        if n is None:
-            return 0
-        else:
-            return 1 + self.count_node(n.left) + self.count_node(n.right)
+def count_node(n):
+    if n is None:
+        return 0
+    else:
+        return 1 + count_node(n.left) + count_node(n.right)
 
 # 단말 노드 개수
-    def count_leaf(self, n): 
-        if n is None:
-            return 0
-        elif n.left is None and n.right is None:
-            return 1
-        else:
-            return self.count_leaf(n.left) + self.count_leaf(n.right)
+def count_leaf(n): 
+    if n is None:
+        return 0
+    elif n.left is None and n.right is None:
+        return 1
+    else:
+        return count_leaf(n.left) + count_leaf(n.right)
 
 # 트리 높이 구하기
-    def calc_height(self, n):
-        if n is None:
-            return 0
-        hLeft = self.calc_height(n.left)
-        hRight = self.calc_height(n.right)
-        if hLeft > hRight:
-            return hLeft + 1
-        else:
-            return hRight + 1
-
-# test
-d = TNode('D', None, None)
-e = TNode('E', None, None)
-b = TNode('B', d, e)
-f = TNode('F', None, None)
-c = TNode('C', f, None)
-root = TNode('A', b, c)
-
-# class test
-# 중위, 전위, 후위, 레벨 순회
-print('inorder:', end=' ')
-root.inorder(root)
-print('\n')
-print('preorder:', end=' ')
-root.preorder(root)
-print('\n')
-print('postorder:', end=' ')
-root.postorder(root)
-print('\n')
-print('levelorder:', end=' ')
-root.levelorder(root)
-print('\n')
-# 노드 개수, 단말 노드, 높이 계산
-print('count_node:', end=' ')
-print(root.count_node(root))
-print('count_leaf:', end=' ')
-print(root.count_leaf(root))
-print('calc_height:', end=' ')
-print(root.calc_height(root))
+def calc_height(n):
+    if n is None:
+        return 0
+    hLeft = calc_height(n.left)
+    hRight = calc_height(n.right)
+    if hLeft > hRight:
+        return hLeft + 1
+    else:
+        return hRight + 1
 
 # 모르스 부호 결정트리
 table =[('A', '.-'),    ('B', '-...'),  ('C', '-.-.'),  ('D', '-..'),
@@ -175,19 +146,6 @@ def encode(ch):
     idx = ord(ch) - ord('A')
     return table[idx][1]
 
-# test
-morseCodeTree = make_morse_tree()
-str = input('입력문장:')
-mlist = []
-for ch in str:
-    code = encode(ch)
-    mlist.append(code)
-print('Morse Code: ', mlist)
-print('Decoding: ', end = '')
-for code in mlist:
-    ch = decode(morseCodeTree, code)
-    print(ch, end='')
-
 # 힙 트리
 class MaxHeap:
     def __init__(self):
@@ -215,7 +173,7 @@ class MaxHeap:
     def insert(self, n):
         self.heap.append(n)
         i = self.size()
-        while (i != 1 and n > self.Parent(i)):
+        while i != 1 and n > self.Parent(i):
             self.heap[i] = self.Parent(i)
             i = i // 2
         self.heap[i] = n

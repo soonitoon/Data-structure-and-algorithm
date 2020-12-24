@@ -9,7 +9,7 @@ def binary_search(A, key, low, high):
         else:
            return binary_search(A, key, low, middle-1)
     return None
-    
+
 # 엔트리 class
 class Entry:
     def __init__(self, key, value):

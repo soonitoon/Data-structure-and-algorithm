@@ -68,7 +68,7 @@ def interpolation_search(A, key, low, high):
 def printStep(arr, val):
     print(f"Step {val} = ", arr)
 
-# run
+run
 testList = [1,4,52,9,43,7,2,3,6]
 selectionSort(testList)
 print("end")
